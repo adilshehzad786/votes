@@ -43,10 +43,11 @@ class VoteQueryset(viewsets.ModelViewSet):
                      "false": False}
         try:
             vote = vote_dict[vote_param]
+            app_label = request.query_params.get("app_label", None)
             model = request.query_params.get("model", None)
             id = request.query_params.get("id", None)
 
-            content_type = ContentType.objects.get(model=model)
+            content_type = ContentType.objects.get(app_label=app_label, model=model)
             instance = content_type.get_object_for_this_type(pk=id)
             instance.votes.up(user, vote)
             message = "Successfully voted"
@@ -62,9 +63,10 @@ class VoteQueryset(viewsets.ModelViewSet):
         :param: model, id i.e. model=movies&id=359
         """
         user = request.user
+        app_label = request.query_params.get("app_label", None)
         model = request.query_params.get("model")
         id = request.query_params.get("id")
-        content_type = ContentType.objects.get(model=model)
+        content_type = ContentType.objects.get(app_label=app_label, model=model)
         instance = content_type.get_object_for_this_type(pk=id)
 
         instance.votes.down(user)
@@ -77,9 +79,10 @@ class VoteQueryset(viewsets.ModelViewSet):
         :param: model, id i.e. model=movies&id=359
         """
         user = request.user
+        app_label = request.query_params.get("app_label", None)
         model = request.query_params.get("model")
         id = request.query_params.get("id")
-        content_type = ContentType.objects.get(model=model)
+        content_type = ContentType.objects.get(app_label=app_label, model=model)
         instance = content_type.get_object_for_this_type(pk=id)
 
         voted = instance.votes.exists(user)
@@ -93,9 +96,10 @@ class VoteQueryset(viewsets.ModelViewSet):
         :param: model, id i.e. model=movies&id=359
         """
         user = request.user
+        app_label = request.query_params.get("app_label", None)
         model = request.query_params.get("model")
         id = request.query_params.get("id")
-        content_type = ContentType.objects.get(model=model)
+        content_type = ContentType.objects.get(app_label=app_label, model=model)
         instance = content_type.get_object_for_this_type(pk=id)
         all_instances = instance.votes.all(user).values()
 
@@ -108,9 +112,10 @@ class VoteQueryset(viewsets.ModelViewSet):
         :param: model, id i.e. model=movies&id=359
         """
 
+        app_label = request.query_params.get("app_label", None)
         model = request.query_params.get("model")
         id = request.query_params.get("id")
-        content_type = ContentType.objects.get(model=model)
+        content_type = ContentType.objects.get(app_label=app_label, model=model)
         instance = content_type.get_object_for_this_type(pk=id)
         vote_count = {'vote_count': instance.votes.count()}
 
@@ -123,9 +128,10 @@ class VoteQueryset(viewsets.ModelViewSet):
         :param: model, id i.e. model=movies&id=359
         """
 
+        app_label = request.query_params.get("app_label", None)
         model = request.query_params.get("model")
         id = request.query_params.get("id")
-        content_type = ContentType.objects.get(model=model)
+        content_type = ContentType.objects.get(app_label=app_label, model=model)
         instance = content_type.get_object_for_this_type(pk=id)
         users_count = {'users_count': instance.votes.users()}
 
@@ -138,9 +144,10 @@ class VoteQueryset(viewsets.ModelViewSet):
         :param: model, id i.e. model=movies&id=359
         """
 
+        app_label = request.query_params.get("app_label", None)
         model = request.query_params.get("model")
         id = request.query_params.get("id")
-        content_type = ContentType.objects.get(model=model)
+        content_type = ContentType.objects.get(app_label=app_label, model=model)
         instance = content_type.get_object_for_this_type(pk=id)
         votes = instance.votes.likes()
         results = Counter(votes)
