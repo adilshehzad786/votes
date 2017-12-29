@@ -89,8 +89,11 @@ class _VotableManager(models.Manager):
         object_ids = self.through.objects.filter(user=user, content_type=content_type).values_list('object_id', flat=True)
         return self.model.objects.filter(pk__in=list(object_ids))
 
-    def count(self):
-        return self.through.votes_for(self.model, self.instance).count()
+    def count(self, vote = None):
+        if vote is None:
+            return self.through.votes_for(self.model, self.instance).count()
+        else:
+            return self.through.votes_for(self.model, self.instance).filter(vote = vote).count()
 
     def likes(self):
         return self.through.votes_for(self.model, self.instance).values_list("vote", flat=True)
