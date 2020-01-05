@@ -1,3 +1,64 @@
+
+<h2>Option 1</h2>
+<p>
+<span class="code">$ pip install https://github.com/adilshehzad786/votes-2.0/zipball/master</span>
+</p>
+
+<h2>Option 2</h2>
+<p>
+<span class="code">$ pip install git+https://github.com/adilshehzad786/votes-2.0</span>
+</p>
+
+<h2>Option 2b</h2>
+<p>
+<span class="code">$ pip install git+https://github.com/adilshehzad786/votes-2.0.git</span>
+</p>
+
+<h2>Option 3</h2>
+<p>
+<span class="code">$ pip install -e git+https://github.com/adilshehzad786/votes-2.0.git#egg=votes-2.0</span>
+</p>
+
+<hr>
+
+<p>
+Discussed on Reddit here: <a href="http://redd.it/2crput">http://redd.it/2crput</a>.
+</p>
+
+
+<p class="my-span">
+Options 1, 2 and 2b should give the same result. If not, it may be because of
+using a local cache. The cache is in the <span class="code">$HOME/.pip</span> folder (under Linux). To avoid problems,
+you can delete this folder.
+</p>
+
+<p class="my-span">
+If you want to create a <span class="code">requirements.txt</span> file (with <span class="code">pip freeze --local</span>), Options
+1, 2 and 2b won't reflect in <span class="code">requirements.txt</span> that the software should be
+installed from GitHub. Instead, it will be downloaded from PyPi, which may
+contain an older version.
+
+Thus, if you want to include in <span class="code">requirements.txt</span> that the software should be
+installed from GitHub, use Option 3.
+</p>
+
+<h3>Examples</h3>
+<p>
+# using Option 1<br>
+<span class="code">$ pip install https://github.com/django-extensions/django-extensions/zipball/master</span><br>
+<span class="code">$ pip freeze --local</span><br>
+<span class="code">django-extensions==1.4.0</span><br>
+</p>
+
+<p>
+# using Option 3<br>
+<span class="code">$ pip install -e git+https://github.com/django-extensions/django-extensions.git#egg=django-extensions</span><br>
+<span class="code">$ pip freeze --local</span><br>
+<span class="code">-e git+https://github.com/django-extensions/django-extensions.git@4034b96b1879a14af3c26872e739abcad3fc4f3d#egg=django_extensions-master</span><br>
+</p>
+
+<p></p>
+</div>
 =============================
 DRF Votes
 =============================
